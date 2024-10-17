@@ -13,7 +13,7 @@ A module for creating a rectangle and checking if points fall within it.
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software...
 
-
+import turtle
 from random import randint
 
 
@@ -83,14 +83,63 @@ class Rectangle:
         return (self.point2.x - self.point1.x) * (self.point2.y - self.point1.y)
 
 
+class GuiRecctangle(Rectangle):
+    """
+    A graphical representation of a rectangle that can be drawn using the turtle graphics library.
+
+    Inherits from the Rectangle class.
+    """
+
+    def draw(self, canvas: turtle.Turtle) -> None:
+        """
+        Draws the rectangle on the given turtle canvas.
+
+        Args:
+            canvas (turtle.Turtle): The turtle canvas on which to draw the rectangle.
+        """
+        canvas.penup()
+        canvas.goto(self.point1.x, self.point1.y)
+
+        canvas.pendown()
+        canvas.forward(self.point2.x - self.point1.x)
+        canvas.left(90)
+        canvas.forward(self.point2.y - self.point1.y)
+        canvas.left(90)
+        canvas.forward(self.point2.x - self.point1.x)
+        canvas.left(90)
+        canvas.forward(self.point2.y - self.point1.y)
+
+
+class GuiPoint(Point):
+    """
+    A graphical representation of a point that can be drawn using the turtle graphics library.
+
+    Inherits from the Point class.
+    """
+
+    def draw(self, canvas: turtle.Turtle, size: float = 5, color: str = "red") -> None:
+        """
+        Draws the point on the given turtle canvas.
+
+        Args:
+            canvas (turtle.Turtle): The turtle canvas on which to draw the point.
+            size (float): The size of the point to draw.
+            color (str): The color of the point to draw.
+        """
+        canvas.penup()
+        canvas.goto(self.x, self.y)
+        canvas.dot(size, color)
+
+
 if __name__ == "__main__":
 
     # Main game logic to guess whether a user-supplied point is inside a randomly
     # generated rectangle and whether their guess for the area is accurate.
 
     # Create a rectangle with random points
-    rect = Rectangle(
-        Point(randint(0, 9), randint(0, 9)), Point(randint(10, 19), randint(10, 19))
+    rect = GuiRecctangle(
+        Point(randint(0, 400), randint(0, 400)),
+        Point(randint(10, 400), randint(10, 400)),
     )  # pragma: no cover
 
     # Print rectangle coordinates
@@ -106,7 +155,7 @@ if __name__ == "__main__":
     )  # pragma: no cover
 
     # Get point and area from user
-    user_point = Point(
+    user_point = GuiPoint(
         float(input("Guess x: ")), float(input("Guess y: "))
     )  # pragma: no cover
     user_area = float(input("Guess rectangle area: "))  # pragma: no cover
@@ -116,3 +165,8 @@ if __name__ == "__main__":
         "Your point was inside rectangle: ", user_point.falls_in_rectangle(rect)
     )  # pragma: no cover
     print("Your area was off by: ", rect.area() - user_area)  # pragma: no cover
+
+    myturtle = turtle.Turtle()  # pragma: no cover
+    rect.draw(myturtle) # pragma: no cover
+    user_point.draw(myturtle)   # pragma: no cover
+    turtle.done()   # pragma: no cover
