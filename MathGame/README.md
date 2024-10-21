@@ -163,6 +163,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ```
 
 In this version:
-- The **"Clone this repository"** point has been moved outside the code block.
-- A **"Where to Run"** heading has been added to guide the user about environment requirements.
+- The "Clone this repository" point has been moved outside the code block.
+- A "Where to Run" heading has been added to guide the user about environment requirements.
 ```
